@@ -48,7 +48,7 @@ app.use((error, req, res, next)=> {
 });
 
 
-app.listen( PORT, async () => {
+app.listen( port, async () => {
     await connectToDB();
-    console.log(`Server is live at port ${PORT}`);
+    console.log(`Server is live at port ${port}`);
 });
