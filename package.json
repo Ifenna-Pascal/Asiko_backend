@@ -2,20 +2,26 @@
   "name": "instagram-clone-backend",
   "version": "1.0.0",
   "description": "A clone of Instagram",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node \"src/index.js\"",
+    "dev": "nodemon \"src/index.js\""
   },
   "author": "Jim Ezesinachi, Ifenna Monanu",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cloudinary": "^1.28.1",
+    "cors": "^2.8.5",
     "dotenv": "^15.0.0",
     "express": "^4.17.2",
+    "express-fileupload": "^1.2.1",
+    "formidable": "^2.0.1",
+    "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.1.9"
+    "mongoose": "^6.1.9",
+    "xss-clean": "^0.1.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

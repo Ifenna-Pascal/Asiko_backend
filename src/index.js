@@ -3,10 +3,28 @@ const port = process.env.PORT;
 const express = require('express');
 const app = express();
 const userRoutes = require('./routes/user');
+const postRoutes = require('./routes/post');
 const connectToDB = require('./db/setup');
+const cloudinary = require('cloudinary');
+const fileUpload = require('express-fileupload');
+const cors = require('cors');
+const helmet = require('helmet');
+const xss = require('xss-clean');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(fileUpload({ useTempFiles: true }));
+app.use(cors());
+app.use(helmet());
+app.use(xss());
+
+
+// cloudinary config
+cloudinary.config({ 
+    cloud_name: 'jim-marketplace', 
+    api_key: '276669241878884', 
+    api_secret: 'CeiR-Bmx9mYxAIfxuy67mM2wtBg' 
+});
 
 
 // listen for live routes
@@ -14,7 +32,7 @@ app.get('/', (req, res) => {
     return res.status(200).json({ message: 'Welcome To Instagram Clone!' });
 });
 app.use(userRoutes);
-app.use(adminRoutes);
+app.use(postRoutes);
 
 
 // handle invalid or dead links

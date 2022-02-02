@@ -1,22 +1,18 @@
 const User = require('./../models/user');
-const { verifyPassword } = require('./../services/bcrypt');
+const { hashPassword, verifyPassword } = require('./../services/bcrypt');
 const { signToken } = require('./../services/jwt');
 
 
 exports.userCreate = async (req, res, next) => {
     const data = req.body;
 
-    if (!data.username || !data.password || !data.confirmPassword || !data.firstName || !data.lastName ) {
+    if (!data.username || !data.password || !data.firstName || !data.lastName) {
         return res.status(400).json({ message: "One Or More Input Fields Are Empty!" });
-    }
-
-    if (data.password !== data.confirmPassword ) {
-        return res.status(400).json({ message: "Password Fields Do Not Match!" });
     }
 
     try {
         let user = await User.findOne({ username: data.username });
-        if (user) return res.status(400).json({ message: "Email Has Been Used. Please Try Another." });
+        if (user) return res.status(400).json({ message: "Username Has Been Used. Please Try Another." });
 
         const hash = await hashPassword(data.password);
 
@@ -27,7 +23,7 @@ exports.userCreate = async (req, res, next) => {
             lastName: data.lastName
         }).save();
 
-        return res.status(200).json({ message: "User Created Successfully!"});
+        return res.status(200).json({ message: "User Created Successfully!" });
     } catch(error) {
         next(error);
     }
@@ -53,11 +49,11 @@ exports.userLogin = async (req, res, next) => {
 }
 
 
-exports.userFeed = async (req, res, next) => {
+exports.userProfile = async (req, res, next) => {
     const user = req.user;
 
     try {
-        const foundUser = await User.findById(user.id).select('password');
+        const foundUser = await User.findById(user.id).select('password').populate('posts');
         return res.status(200).json({ foundUser });
     } catch (error) {
         next(error);
