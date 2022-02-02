@@ -1,5 +1,5 @@
 require('dotenv').config();
-// const port = process.env.PORT;
+const port = process.env.PORT;
 const express = require('express');
 const app = express();
 const userRoutes = require('./routes/user');
@@ -48,7 +48,7 @@ app.use((error, req, res, next)=> {
 });
 
 
-app.listen(4000, async () => {
+app.listen( PORT, async () => {
     await connectToDB();
-    console.log(`Server is live at port 4000`);
+    console.log(`Server is live at port ${PORT}`);
 });
